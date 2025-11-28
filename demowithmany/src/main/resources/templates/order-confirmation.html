@@ -1,0 +1,18 @@
+
+<!-- order-confirmation.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Order Confirmation</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <div th:insert="fragments :: header"></div>
+
+  <h2>Thank You! Your order has been placed.</h2>
+  <p>Your order will be processed shortly.</p>
+  <a th:href="@{/}">Continue Shopping</a>
+
+  <div th:insert="fragments :: footer"></div>
+</body>
+</html>

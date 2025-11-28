@@ -1,0 +1,36 @@
+package com.example.demowithmany.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model; 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demowithmany.model.User;
+import com.example.demowithmany.service.UserService;
+
+@Controller
+public class AuthController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("userDto", new User());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String processRegister(@ModelAttribute("userDto") User dto) {
+        userService.registerUser(dto.getUsername(), dto.getPassword());
+        return "redirect:/login?registered";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+}
+

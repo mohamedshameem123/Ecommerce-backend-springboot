@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${product.name} + ' Details'">Product Details</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <div th:insert="fragments :: header"></div>
+
+  <h2 th:text="${product.name}">Product Name</h2>
+  <p><strong>Price:</strong> ₹<span th:text="${product.price}">0.00</span></p>
+  <p><strong>Description:</strong> <span th:text="${product.description}">–</span></p>
+  <p><strong>Stock:</strong> <span th:text="${product.stock}">0</span></p>
+
+  <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
+    <button type="submit">Add to Cart</button>
+  </form>
+
+  <a th:href="@{/}">Back to Home</a>
+
+  <div th:insert="fragments :: footer"></div>
+</body>
+</html>

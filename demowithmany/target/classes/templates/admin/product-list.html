@@ -1,0 +1,38 @@
+
+<!-- admin/product-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin — Product List</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <div th:insert="fragments :: header"></div>
+
+  <h2>Products (Admin)</h2>
+  <a th:href="@{/admin/products/add}">Add New Product</a>
+  <table border="1">
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      <tr th:each="prod : ${products}">
+        <td th:text="${prod.id}">1</td>
+        <td th:text="${prod.name}">Name</td>
+        <td>₹<span th:text="${prod.price}">0.00</span></td>
+        <td th:text="${prod.stock}">0</td>
+        <td>
+          <a th:href="@{'/admin/products/edit/' + ${prod.id}}">Edit</a> |
+          <a th:href="@{'/admin/products/delete/' + ${prod.id}}"
+             onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div th:insert="fragments :: footer"></div>
+</body>
+</html>
+
+
+

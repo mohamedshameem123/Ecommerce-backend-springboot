@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+  <body>
+
+    <!-- Header fragment -->
+    <div th:fragment="header">
+      <header>
+        <nav>
+          <a th:href="@{/}">Home</a> |
+          <a th:href="@{/cart/view}">Cart</a> |
+
+          <!-- When user is logged in -->
+          <span sec:authorize="isAuthenticated()">
+            Welcome,
+            <b sec:authentication="name">User</b> |
+            <a th:href="@{/logout}">Logout</a>
+          </span>
+
+          <!-- When user is NOT logged in -->
+          <span sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">Login</a> |
+            <a th:href="@{/register}">Register</a>
+          </span>
+        </nav>
+        <hr/>
+      </header>
+    </div>
+
+    <!-- Footer fragment -->
+    <div th:fragment="footer">
+      <footer>
+        <hr/>
+        <p>©2025 My E-commerce Site</p>
+      </footer>
+    </div>
+
+  </body>
+</html>

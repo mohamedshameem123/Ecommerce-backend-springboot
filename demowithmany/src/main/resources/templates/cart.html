@@ -1,0 +1,62 @@
+
+<!-- cart.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Cart</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <div th:insert="fragments :: header"></div>
+
+  <h1>Your Cart</h1>
+
+  <div th:if="${#lists.isEmpty(items)}">
+    <p>Your cart is empty.</p>
+  </div>
+  <div th:if="${!#lists.isEmpty(items)}">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price each</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${items}">
+          <td th:text="${item.product.name}">Name</td>
+          <td>₹<span th:text="${item.product.price}">0.00</span></td>
+          <td>
+            <form th:action="@{/cart/update}" method="post" style="display:inline;">
+              <input type="hidden" name="cartItemId" th:value="${item.id}"/>
+              <input type="number" name="quantity" th:value="${item.quantity}" min="1"/>
+              <button type="submit">Update</button>
+            </form>
+          </td>
+          <td>₹<span th:text="${item.product.price.multiply(T(java.math.BigDecimal).valueOf(item.quantity))}">0.00</span></td>
+          <td>
+            <form th:action="@{'/cart/remove/' + ${item.id}}" method="post">
+              <button type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>Total: </strong>
+      ₹<span th:text="${items
+         .stream()
+         .map(i -> i.product.price.multiply(T(java.math.BigDecimal).valueOf(i.quantity)))
+         .reduce(T(java.math.BigDecimal).ZERO, (a,b) -> a.add(b))}">0.00</span>
+    </p>
+    <form th:action="@{/order/place}" method="post">
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+
+  <div th:insert="fragments :: footer"></div>
+</body>
+</html>
